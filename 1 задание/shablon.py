@@ -68,22 +68,22 @@ def search():
     drones[1].takeoff()
     new_point = True
     while True:
-        current_temp = drones[0].get_piro_sensor_data()
+        current_temp = drones[1].get_piro_sensor_data()
         if current_temp is not None and current_temp >= 100:
-            curr_pos = drones[0].get_local_position_lps()
+            curr_pos = drones[1].get_local_position_lps()
             if curr_pos is not None:
                 print(curr_pos, current_temp)
                 points_interest.append([curr_pos[0], curr_pos[1]])
 
         # print(drones[0].get_local_position_lps(blocking=True))
         if new_point:
-            drones[0].go_to_local_point(x=mission_point[current_mission_point][0],
+            drones[1].go_to_local_point(x=mission_point[current_mission_point][0],
                                         y=mission_point[current_mission_point][1],
                                         z=mission_point[current_mission_point][2])
 
             new_point = False
 
-        if drones[0].point_reached(True):
+        if drones[1].point_reached():
             new_point = True
             current_mission_point += 1
 
@@ -92,7 +92,7 @@ def search():
 
         time.sleep(0.001)
 
-    drones[0].land()
+    drones[1].land()
     state_mission[0] = 2
 
 
@@ -105,18 +105,18 @@ def action_drone1():
 
     current_mission_point = 0
 
-    drones[1].arm()
-    drones[1].takeoff()
+    drones[2].arm()
+    drones[2].takeoff()
     new_point = True
     while True:
         if new_point:
-            drones[1].go_to_local_point(x=mission_point[current_mission_point][0],
+            drones[2].go_to_local_point(x=mission_point[current_mission_point][0],
                                         y=mission_point[current_mission_point][1],
                                         z=mission_point[current_mission_point][2])
 
             new_point = False
 
-        if drones[1].point_reached(True):
+        if drones[2].point_reached(True):
             new_point = True
             current_mission_point += 1
 
@@ -125,7 +125,7 @@ def action_drone1():
 
         time.sleep(0.25)
 
-    drones[1].land()
+    drones[2].land()
     state_mission[1] = 2
 
 
